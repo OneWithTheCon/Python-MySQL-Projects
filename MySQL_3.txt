@@ -1,0 +1,176 @@
+Assignment 3
+PRODUCTS and SUPPLIERS
++------+----------------+------+-------+--------------+---------+    
+| P_id | Pname          | Qty  | Price | Company      | Supcode |
++------+----------------+------+-------+--------------+---------+
+|  101 | Digital Camera |  120 | 12000 | Renbix       | S01     |
+|  102 | Digital Pad    |  100 | 22000 | Digipop      | S02     |
+|  104 | Pendrive 16GB  |  500 |  1100 | Store King   | S01     |
+|  106 | LED Screen     |   70 | 28000 | Disp Experts | S02     |
+|  105 | Car GPS        |   60 | 12000 | Move On      | S03     |
++------+----------------+------+-------+--------------+---------+
++---------+------------------+---------+
+| Supcode | SName            | City    |
++---------+------------------+---------+
+| S01     | Get All Inc      | Kolkata |
+| S03     | Easy Market Corp | Delhi   |
+| S02     | Digi Busy Group  | Chennai |
++---------+------------------+---------+
+	1. Display the details of all the products in ascending order of the product name.
+mysql> select * from products order by Pname;
++------+----------------+------+-------+--------------+---------+
+| P_id | Pname          | Qty  | Price | Company      | Supcode |
++------+----------------+------+-------+--------------+---------+
+|  105 | Car GPS        |   60 | 12000 | Move On      | S03     |
+|  101 | Digital Camera |  120 | 12000 | Renbix       | S01     |
+|  102 | Digital Pad    |  100 | 22000 | Digipop      | S02     |
+|  106 | LED Screen     |   70 | 28000 | Disp Experts | S02     |
+|  104 | Pendrive 16GB  |  500 |  1100 | Store King   | S01     |
++------+----------------+------+-------+--------------+---------+
+
+	2. Display product name and price of all those products whose price is in the range 10000 and 15000(Both price inclusive).
+mysql> select Pname,Price from products where Price between 10000 and 15000;
++----------------+-------+
+| Pname          | Price |
++----------------+-------+
+| Digital Camera | 12000 |
+| Car GPS        | 12000 |
++----------------+-------+
+
+	3. Display the number of products supplied by each supplier.
+mysql>  select SName,count(*) from products join suppliers on (products.Supcode=suppliers.Supcode) group by SName;
++------------------+----------+
+| SName            | count(*) |
++------------------+----------+
+| Get All Inc      |        2 |
+| Digi Busy Group  |        2 |
+| Easy Market Corp |        1 |
++------------------+----------+
+
+	4. Display the price product name and quantity of those products which have quantity more than 100.
+mysql> select Price,Pname,Qty from products where Qty>100;
++-------+----------------+------+
+| Price | Pname          | Qty  |
++-------+----------------+------+
+| 12000 | Digital Camera |  120 |
+|  1100 | Pendrive 16GB  |  500 |
++-------+----------------+------+
+
+	5. Display the name of those suppliers who are either from Delhi or from Chennai
+mysql> select SName from suppliers where City='Delhi' or City='Chennai';
++------------------+
+| SName            |
++------------------+
+| Easy Market Corp |
+| Digi Busy Group  |
++------------------+
+
+	6. Display the product id, product name and supplier names having quantity more than 100;
+mysql>  select P_id,Pname,SName from products p, suppliers s where p.Supcode=s.Supcode and Qty>100;
++------+----------------+-------------+
+| P_id | Pname          | SName       |
++------+----------------+-------------+
+|  104 | Pendrive 16GB  | Get All Inc |
+|  101 | Digital Camera | Get All Inc |
++------+----------------+-------------+
+
+	7. Find the output of the following commands.
+(i)select distinct(Supcode) from products;
++---------+
+| Supcode |
++---------+
+| S01     |
+| S02     |
+| S03     |
++---------+
+
+(ii)select max(Price),min(Price) from products;
++------------+------------+
+| max(Price) | min(Price) |
++------------+------------+
+|      28000 |       1100 |
++------------+------------+
+
+(iii)select Price*Qty from products where P_id=104;
++-----------+
+| Price*Qty |
++-----------+
+|    550000 |
++-----------+
+
+CABHUB and CUSTOMER
++-------+---------+----------+--------+----------+---------+
+| Vcode | Vname   | Make     | Colour | Capacity | Charges |
++-------+---------+----------+--------+----------+---------+
+|   100 | Innova  | Toyota   | WHITE  |        7 |      15 |
+|   102 | SX4     | Suzuki   | BLUE   |        4 |      14 |
+|   104 | C Class | Mercedes | RED    |        4 |      35 |
+|   105 | A Star  | Suzuki   | WHITE  |        3 |      14 |
+|   108 | Indigo  | Tata     | SILVER |        3 |      12 |
++-------+---------+----------+--------+----------+---------+
++-------+--------------+-------+
+| CCode | CName        | VCode |
++-------+--------------+-------+
+|     1 | Hermant Sahu |   101 |
+|     2 | Raj Lal      |   108 |
+|     3 | Feroza Shah  |   105 |
+|     4 | Ketan Dhal   |   104 |
++-------+--------------+-------+
+	a)Which field an be considered as primary key and what are the canditate keys in the table?
+CABHUB
+Vcode,Vname
+CUSTOMER
+CCode,CName
+
+	b)Write SQL commands for the following stamentsz;
+	(i)To display the names of all the white coloured vehicles
+mysql> select Vname from CabHub where Colour='WHITE';
++--------+
+| Vname  |
++--------+
+| Innova |
+| A Star |
++--------+
+	(ii)To display the vehicle name and capacity of vehicles in ascending order of their seating capacity
+mysql> select Vname,Capacity from CabHub order by Capacity ASC;
++---------+----------+
+| Vname   | Capacity |
++---------+----------+
+| A Star  |        3 |
+| Indigo  |        3 |
+| SX4     |        4 |
+| C Class |        4 |
+| Innova  |        7 |
++---------+----------+
+	(iii)To display the highest charge in which a vehicle can be hired from CABHUB
+mysql> select max(Charges) from CabHub;
++--------------+
+| max(Charges) |
++--------------+
+|           35 |
++--------------+	
+	(iv) To display the customer name and the corresponding name of the vehicle hired by them
+select CName,Vname from CabHub CH,Customer c where CH.Vcode=c.VCode;
++-------------+---------+
+| CName       | Vname   |
++-------------+---------+
+| Ketan Dhal  | C Class |
+| Feroza Shah | A Star  |
+| Raj Lal     | Indigo  |
++-------------+---------+	
+
+	c) Give the output of the following SQL queries:
+	(i)select count(distinct Make) from CabHub;
++----------------------+
+| count(distinct Make) |
++----------------------+
+|                    4 |
++----------------------+
+	(ii)select max(Charges),min(Charges) from CabHub;
++--------------+--------------+
+| max(Charges) | min(Charges) |
++--------------+--------------+
+|           35 |           12 |
++--------------+--------------+	
+	
+	

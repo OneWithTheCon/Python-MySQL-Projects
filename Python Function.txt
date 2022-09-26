@@ -1,0 +1,141 @@
+1.Write a program using function display() which accepts 2 integers as arguments and returns the biggest number.
+#Function Definition
+def display(a,b):
+   if(a>b):
+      return a
+   else:
+      return b
+#Function Calling
+x=int(input('Enter the first number: '))
+y=int(input('Enter the second number: '))
+Result=display(x,y)
+print(Result)
+
+2.Write a function that accepts a number n and returns the factorial of n.
+#Function Definition
+def factorial(n):
+   if n == 1 or n==0:
+       return 1
+   else:
+       return n*factorial(n-1)
+#Function Calling
+num=int(input('Enter a number: '))
+Result=factorial(num)
+print(Result)
+
+3.Write a function display() which accepts a number as argument and returns True if it is even. Otherwise returns False
+#Function Definition
+def display(x):
+   if x%2==0:
+      return True
+   else:
+      return False
+#Function Calling	  
+n=int(input('Enter a number: '))
+p=display(n)
+if p==True:
+   print('Even')
+else:
+   print('Odd')
+ 
+4.Write a Python function which accepts 3 numbers and find the max of the three numbers
+#Function Defining
+def maximum(a,b,c):
+    largest=1
+    if(a>=b) and (a>=c):
+        largest=a
+    elif(b>=a) and (b>=c):
+        largest=b
+    else:
+        largest=c
+    return largest
+#Funtion Calling
+n1=int(input('Enter the first number: '))
+n2=int(input('Enter the second number: '))
+n3=int(input('Enter the third number: '))
+print(maximum(n1,n2,n3))
+
+5.Write a Python function to sum all the numbers in a list
+#Function Defining
+lst=[]
+def list_sum(lst):
+    Sum=0
+    for i in range(0,n):
+        Sum=Sum+lst[i]
+    return Sum
+#Funtion Calling
+lst=[]
+n=int(input('Number of elements in the list: '))
+for i in range(0,n,1):
+   num=int(input('Enter the items in the list: '))
+   lst.append(num)
+print (lst)
+print(list_sum(lst))
+
+6. Write a Python function to multiply all the numbers in a list 
+#Function Defining
+lst=[]
+def list_product(lst):
+    Product=1
+    for i in range(0,n):
+        Product=Product*lst[i]
+    return Product
+#Funtion Calling
+lst=[]
+n=int(input('Number of elements in the list: '))
+for i in range(0,n,1):
+    num=int(input('Enter the items in the list: '))
+    lst.append(num)
+print (lst)
+print(list_product(lst))
+
+7. Write a Python function that accepts a string and calculate the number of upper-case letters and lower-case letters
+ #Funtion Defining
+def upperlower(string):
+    upper=0
+    lower=0
+    for i in range(len(string)):
+# For lower letters
+        if (ord(string[i]) >= 97 and ord(string[i]) <= 122):
+            lower+= 1
+# For upper letters
+        elif (ord(string[i]) >= 65 and ord(string[i]) <= 90):
+            upper+= 1
+    return upper,lower
+
+#Funtion Calling
+Str=input('Enter a string: ')
+(a,b)=upperlower(Str)
+print('Upper-case characters =', a,
+      'Lower-case characters =',b)
+
+def calc_sum(x,N):
+    sum=0
+    for i in range(0,N+1):
+        sum=sum+(x*i)
+    return sum
+x=int(input('The variable is: '))
+N=int(input('Enter the limit: '))
+print('The sum of the series is: ', calc_sum(x,N))
+
+def calc_sum(x,n):
+    sum=0
+    fact=1
+    for i in range(2,n+1):
+        fact=fact*i
+        sum=sum+(x/fact)
+    res=1-x+sum
+    return res
+x=int(input('The variable is: '))
+N=int(input('Enter the limit: '))
+print('The sum of the series is: ', calc_sum(x,N))
+	  
+def Reverse(x):
+    num = n
+    Reverse = 0
+    while(num>0):
+        Reminder = num%10
+        Reverse = (Reverse*10)+Reminder
+        num = num//10
+    return ("Reverse of Number is = %d" %Reverse)
+

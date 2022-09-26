@@ -1,0 +1,85 @@
+1.Write a program to read story.txt and count the words starting with P
+f=open('story.txt','r')
+x=f.read()
+y=x.split()
+count=0
+for i in y:
+    if i[0] in ['p','P']:
+        count=count+1
+print(count)
+f.close()
+
+2.Write a program to read story.txt and count the number of lines starting with I
+f=open('story.txt','r')
+x=f.readlines()
+count=1
+for i in x:
+    if i[0]=='I':
+        count=count+1
+print(count) 
+f.close()
+
+3.Write a program to count the number of lines starting with vowels from file story.txt.
+f=open('story.txt','r')
+count=0
+x=f.readlines()
+for i in x:
+    if i[0] in ['A','E','I','O','U']:
+        count+=1
+print(count)
+f.close()        
+
+f=open('notes.txt','r')
+x=f.read()
+y=x.split()
+count=0
+for i in y:
+    if i in ['the','The']:
+        count=count+1
+print(count)
+f.close()
+
+4.Write a fuction to copy the content of a file to another file
+def filecopy():
+    f1=open('story.txt','r')
+    f2=open('mystory.txt','w')
+    x=f1.readline()
+    while(x):
+        f2.writelines(x)
+        x=f1.readline()
+    f1.close()
+    f2.close()
+filecopy() 
+
+5.Write a program to store records in a binary file employee.dat. The details stored are {Emp no,name,designation,department,salary}
+import pickle
+f=open('employee.dat','ab')
+ed={}
+ch='y'
+while ch='y':
+    EmployNO=int(input('Enter the employee number: '))
+    Name=input('Enter name: ')
+    Desig=input('Enter designation: ')
+    Depart=input('Enter department: ')
+    Salary=input('Enter salary amount: ')
+    ed['Emp no']=EmployNO
+    ed['name']=Name
+    ed['designation']=Desig
+    ed['department']=Depart
+    ed['salary']=Salary
+    ch=input('Do you want to enter more records?(Y/N) ')
+    if upper(ch!='Y'):
+        break
+pickle.dump(ed,f)
+f.close()
+
+Try and Except Block
+file_handle=open(filename, readmode)
+try:
+    object=pickle.load(file_handle)
+    #Enter other statements here
+except Exception:
+    file_handle.close()
+
+
+  

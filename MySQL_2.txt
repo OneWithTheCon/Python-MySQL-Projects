@@ -1,0 +1,322 @@
+Asignment 2
+Q1.The Title and Price columns of table “Library” are given below:
++---------------------+-------+
+| TITLE               | PRICE |
++---------------------+-------+
+| Mastering C++       |   295 |
+| Guide Network       |   300 |
+| Mastering SQL       |   450 |
+| Dos Guide           |   400 |
+| BASIC For Beginners |   299 |
+| Mastering Windows   |  NULL |
++---------------------+-------+
+Based on this information ,find the output of the following queries:
+	1)SELECT MIN(Price)from library;
++------------+
+| min(PRICE) |
++------------+
+|        295 |
++------------+
+	2)SELECT COUNT(Title) from library WHERE Price < 50;
++--------------+
+| count(TITLE) |
++--------------+
+|            0 |
++--------------+
+	3)Select AVG(price) from library WHERE title like ‘%e%’;
++------------+
+| avg(PRICE) |
++------------+
+|   348.8000 |
++------------+
+	4)Select title from library where price = (select max(price) from library);
++---------------+
+| TITLE         |
++---------------+
+| Mastering SQL |
++---------------+
+
+Q2.Consider the table Hospital given below:
+Hospital
++------+---------+------+------------+-------------+---------+------+
+| No   | Name    | Age  | Department | Date_Of_Adm | Charges | Sex  |
++------+---------+------+------------+-------------+---------+------+
+|    1 | Sandeep |   64 | Surgery    | 1998-02-23  |     300 | M    |
+|    2 | Ravina  |   24 | Orthopedic | 1998-01-20  |     200 | F    |
+|    3 | Karan   |   45 | Orthopedic | 1998-02-10  |     200 | M    |
+|    4 | Tarun   |   12 | Surgery    | 1998-01-01  |     300 | F    |
+|    5 | Zubin   |   36 | ENT        | 1998-01-12  |     250 | M    |
+|    6 | Ketaki  |   16 | ENT        | 1998-02-12  |     300 | F    |
+|    7 | Ankita  |   29 | Cardiology | 1998-02-20  |     800 | F    |
+|    8 | Zareen  |   45 | Gynecology | 1998-02-22  |    NULL | F    |
+|    9 | Kush    |   19 | Cardiology | 1998-01-13  |     800 | M    |
+|   10 | Shailya |   31 | Medicine   | 1997-02-19  |     400 | F    |
++------+---------+------+------------+-------------+---------+------+
+Write commands in SQL for (i) to (xii)
+
+(i) To show all information about the patients of cardiology department.
+ select * from Hospital where Department='Cardiology';
++------+--------+------+------------+-------------+---------+------+
+| No   | Name   | Age  | Department | Date_Of_Adm | Charges | Sex  |
++------+--------+------+------------+-------------+---------+------+
+|    7 | Ankita |   29 | Cardiology | 1998-02-20  |     800 | F    |
+|    9 | Kush   |   19 | Cardiology | 1998-01-13  |     800 | M    |
++------+--------+------+------------+-------------+---------+------+
+
+(ii) To list the names of female patients who are in orthopaedic department.
+ select * from Hospital where Sex='F' and Department='Orthopedic';
++------+--------+------+------------+-------------+---------+------+
+| No   | Name   | Age  | Department | Date_Of_Adm | Charges | Sex  |
++------+--------+------+------------+-------------+---------+------+
+|    2 | Ravina |   24 | Orthopedic | 1998-01-20  |     200 | F    |
++------+--------+------+------------+-------------+---------+------+
+
+(iii)To display Patient’s name, charges, Age for  male and female patients.
+ select Name,Charges,Age from Hospital;
++---------+---------+------+
+| Name    | Charges | Age  |
++---------+---------+------+
+| Sandeep |     300 |   64 |
+| Ravina  |     200 |   24 |
+| Karan   |     200 |   45 |
+| Tarun   |     300 |   12 |
+| Zubin   |     250 |   36 |
+| Ketaki  |     300 |   16 |
+| Ankita  |     800 |   29 |
+| Zareen  |    NULL |   45 |
+| Kush    |     800 |   19 |
+| Shailya |     400 |   31 |
++---------+---------+------+
+
+(iv)To count the number of patients with Age > 30.
+select count(*) from Hospital where Age>30;
++----------+
+| count(*) |
++----------+
+|        5 |
++----------+
+
+(v) To increase the charges of male patient in ENT department by 3%.
+update Hospital set Charges=Charges+0.3*Charges where Department='ENT' and Sex='M';
+
+(vi) Add another column email_id with suitable data type.
+ alter table Hospital add Email_Id char(50);
+ 
+(vii) Delete the records of all female patients in Surgery department.
+ delete from Hospital where Sex='F' and Department='Surgery';
+ 
+(viii)Display a report listing name, age, charges and amount of charges including VAT as 2%  on charges name the column as total charges and keep the data in ascending order of name.
+  select Name, Age, Charges,(Charges+0.2*Charges) as Total_Charges from Hospital order by Name ASC;
++---------+------+---------+---------------+
+| Name    | Age  | Charges | Total_Charges |
++---------+------+---------+---------------+
+| Ankita  |   29 |     800 |         960.0 |
+| Karan   |   45 |     200 |         240.0 |
+| Ketaki  |   16 |     300 |         360.0 |
+| Kush    |   19 |     800 |         960.0 |
+| Ravina  |   24 |     200 |         240.0 |
+| Sandeep |   64 |     300 |         360.0 |
+| Shailya |   31 |     400 |         480.0 |
+| Zareen  |   45 |    NULL |          NULL |
+| Zubin   |   36 |     325 |         390.0 |
++---------+------+---------+---------------+
+
+(ix)To display the difference of highest and lowest charges of each department having maximum charges more than 300.
+ select max(Charges)-min(Charges) from Hospital group by Department having max(Charges)>300;
++---------------------------+
+| max(Charges)-min(Charges) |
++---------------------------+
+|                        25 |
+|                         0 |
+|                         0 |
++---------------------------+
+
+(x) Find out the details of patients whose age  is same or more than that of patient whose hospital charges are maximum.
+ select * from Hospital where Age>=(select Age from Hospital where Charges=(select max(Charges) from Hospital));
+ 
+(xi)Display the details of all the patients who are hospitalised in 1998
+  select * from Hospital where year(Date_Of_Adm)=1998;
++------+---------+------+------------+-------------+---------+------+----------+
+| No   | Name    | Age  | Department | Date_Of_Adm | Charges | Sex  | Email_Id |
++------+---------+------+------------+-------------+---------+------+----------+
+|    1 | Sandeep |   64 | Surgery    | 1998-02-23  |     300 | M    | NULL     |
+|    2 | Ravina  |   24 | Orthopedic | 1998-01-20  |     200 | F    | NULL     |
+|    3 | Karan   |   45 | Orthopedic | 1998-02-10  |     200 | M    | NULL     |
+|    4 | Tarun   |   12 | Surgery    | 1998-01-01  |     300 | F    | NULL     |
+|    5 | Zubin   |   36 | ENT        | 1998-01-12  |     325 | M    | NULL     |
+|    6 | Ketaki  |   16 | ENT        | 1998-02-12  |     300 | F    | NULL     |
+|    7 | Ankita  |   29 | Cardiology | 1998-02-20  |     800 | F    | NULL     |
+|    8 | Zareen  |   45 | Gynecology | 1998-02-22  |    NULL | F    | NULL     |
+|    9 | Kush    |   19 | Cardiology | 1998-01-13  |     800 | M    | NULL     |
++------+---------+------+------------+-------------+---------+------+----------+
+
+(xii)Display the charges of various departments .A charge amount should appear only once.
+ select Charges from Hospital group by Department;
++---------+
+| Charges |
++---------+
+|     300 |
+|     200 |
+|     325 |
+|     800 |
+|    NULL |
+|     400 |
++---------+
+
+Find out the  output for SQL commands (xiii) to (xvi).
+(xiii)SELECT COUNT(DISTINCT  Department) FROM HOSPITAL ;
++----------------------------+
+| count(distinct Department) |
++----------------------------+
+|                          6 |
++----------------------------+
+
+(xiv)SELECT MAX(Age) FROM HOSPITAL  WHERE SEX=’M’;
++----------+
+| max(Age) |
++----------+
+|       64 |
++----------+
+
+(xv)SELECT AVG(Charges) FROM HOSPITAL  WHERE SEX=’F’;
++--------------+
+| avg(Charges) |
++--------------+
+|     400.0000 |
++--------------+
+
+(xvi)SELECT SUM(Charges) FROM HOSPITAL  WHERE DATEOFadm < ’12/08/98’;
++--------------+
+| sum(Charges) |
++--------------+
+|         3625 |
++--------------+
+
+Q3.Write SQL commands for the following:
+A]
+1. Create a table library with the following attributes:(book code,category,title,author's name,no_of_copies)
+ create table library(book_code char(5),category char(20),title char(100),author's_name char(35),no_of_copies int);
+
+2. Display the title of books under the category science
+ select title from library where category='science';
+ 
+3. Display the books having more than 10 copies
+ select * from library where no_of_copies>10;
+ 
+4. Display the book codes whose name starts with ‘A’
+ select book_code from library where book_code like 'A%';
+
+5. Add a column price to the table
+ alter table library add price int;
+
+B]
+1. Create table stationary with the following attributes: (item_code, name, rate, quantity and price)
+ create table stationary(item_code char(6),name char(20),rate float, quantity int, price int);
+ 
+2. Display the item names in alphabetical order 
+ select name from stationary order by name ASC;
+ 
+3. Display the details of items whose rate is in between 10.5 and 20.5
+ select * from stationary where rate between 10.5 and 20.5;
+ 
+4. Add one column total amount
+ alter table stationary add total_amount float;
+ 
+5. Display the item name starting with letter ‘B’
+ select name from stationary where name like 'B%';
+ 
+C]
+1. Create table furniture with the following attributes: (f_no, f_name, price, discount)
+ create table furniture(f_no int,f_name char(20),price int, discount int);
+ 
+2. Show all information about baby cots
+ select * from furniture where f_name='baby cots';
+ 
+3. List the furniture name which are priced more than 15000
+ select f_name from furniture where price>15000;
+ 
+4. Count the number of items whose f_name is sofa
+ select count(*) from furniture where f_name='sofa';
+ 
+5. List f_name and price in descending order of price
+ select f_name,price from furniture order by price DESC;
+ 
+D]
+1.Create a table student with the following attributes: (roll, name, class, division, total_marks, grade)
+ create table student(roll int,name char(35),class int,division char,total_marks float, gradde char(2));
+ 
+2. Display the student’s name in alphabetical order
+ select name from student order by name ASC;
+ 
+3. Display the details of students who are studying in class 12 E
+ select * from student where class=12 and division='E';
+
+4. Update the marks of a particular student
+ update student set marks=NEW VALUE where name='PARTICULAR STUDENT NAME';
+
+5. Display the details of students who scored more than 450
+ select * from student where marks>450;
+
+E]
+1. Create a table Doctor with the following attributes: (d_id, name, department, age, experience, salary)
+ create table Doctor(d_id char(5),name char(35),department char(40),age int,experience float,salary int);
+ 
+2. Insert one record into the table
+ insert into Doctor values(OP123,Albert Frost,Orthopedic,35,5,250000);
+
+3. Display the name of doctors in ENT department
+ select name from Doctor where department='ENT';
+
+4. Display the number of doctors having more than 10 years of experience
+ select count(*) from Doctor where experience>10;
+ 
+5. Display the doctors’ names in alphabetical order
+ select name from Doctor order by name ASC;
+
+F]
+1. Create a table Flight with the following attributes: (Fl_no, Airlines, fare, tax)
+ create table Flight(Fl_no char(6),Airlines char(15),fare int,tax float);
+ 
+2. Insert one record into the table
+ insert into Flight values(EI007,Emirates,2500000, 6500.50);
+
+3. Display the minimum fare Indian airlines are offering
+ select min(fare) from Flight where Airlines='Indian';
+
+4. Arrange the flight names in alphabetical order
+ select Airlines from Flight order by Airlines;
+
+5. Display the number of flights in the table
+ select count(*) from Flight;
+ 
+G]
+1. Create table Employee with the following attributes: (emp_id, name, department, designation, salary)
+ create table Employee(emp_id char(5),name char(35),department char(40),designation char(20),salary int);
+ 
+2. Display the content of table in descending order of names
+ select * from Employee order by name DESC;
+ 
+3. Display the maximum salary among managers and clerks in employee table 
+ select max(salary) from Employee group by designation having designation='manager' or designation='clerk';
+
+4. Display the total number of employees in sales department
+ select count(*) from Employee where department='sales';
+
+5. Delete the salary column from the table employee 
+ alter table Employee drop column salary;
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

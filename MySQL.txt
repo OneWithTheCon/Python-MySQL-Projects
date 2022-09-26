@@ -1,0 +1,372 @@
+Assignment 1
+BANK
+Write SQL commands for:
+	1.Create a table bank(Here Accno is the primary key)
+	Answer:
+mysql> create table bank(Accno int primary key,Bname char(10),Cname char(45),Lamount int,Instalments int,Rate float,Date date);
+Query OK, 0 rows affected (0.98 sec)
+
+	2.Display the structure of bank
+	Answer:
+mysql> desc bank;
++-------------+----------+------+-----+---------+-------+
+| Field       | Type     | Null | Key | Default | Extra |
++-------------+----------+------+-----+---------+-------+
+| Accno       | int      | NO   | PRI | NULL    |       |
+| Bname       | char(10) | YES  |     | NULL    |       |
+| Cname       | char(45) | YES  |     | NULL    |       |
+| Lamount     | int      | YES  |     | NULL    |       |
+| Instalments | int      | YES  |     | NULL    |       |
+| Rate        | float    | YES  |     | NULL    |       |
+| Date        | date     | YES  |     | NULL    |       |
++-------------+----------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+	3.Insert records into the table
+	Answer:
+mysql> insert into bank values(1,'SBI','Vikash Rai',75000,142,12.00,'2011-07-19');
+Query OK, 1 row affected (1.17 sec)
+
+mysql> insert into bank values(2,'ICICI','Munna',158000,234,10.00,'2010-05-12');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into bank values(3,'PNB','Rakhi',53000,140,NULL,'2012-03-22');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into bank values(4,'SBI','Gill',85000,165,12.50,'2011-06-12');
+Query OK, 1 row affected (0.04 sec)
+
+mysql> insert into bank values(5,'HDFC','Mathur',170000,210,14,'2013-05-18');
+Query OK, 1 row affected (0.03 sec)
+
+mysql> insert into bank values(6,'ICICI','Vinod',15000,110,13,'2014-11-12');
+Query OK, 1 row affected (0.03 sec)
+
+	4.Display all the details of bank table
+	Answer
+mysql> select * from bank;
++-------+-------+------------+---------+-------------+------+------------+
+| Accno | Bname | Cname      | Lamount | Instalments | Rate | Date       |
++-------+-------+------------+---------+-------------+------+------------+
+|     1 | SBI   | Vikash Rai |   75000 |         142 |   12 | 2011-07-19 |
+|     2 | ICICI | Munna      |  158000 |         234 |   10 | 2010-05-12 |
+|     3 | PNB   | Rakhi      |   53000 |         140 | NULL | 2012-03-22 |
+|     4 | SBI   | Gill       |   85000 |         165 | 12.5 | 2011-06-12 |
+|     5 | HDFC  | Mathur     |  170000 |         210 |   14 | 2013-05-18 |
+|     6 | ICICI | Vinod      |   15000 |         110 |   13 | 2014-11-12 |
++-------+-------+------------+---------+-------------+------+------------+
+6 rows in set (0.00 sec)
+
+	5.Display the rows containing Accno,Bname,Cname and Lamount
+	Answer
+mysql> select Accno,Bname,Cname,Lamount from bank;
++-------+-------+------------+---------+
+| Accno | Bname | Cname      | Lamount |
++-------+-------+------------+---------+
+|     1 | SBI   | Vikash Rai |   75000 |
+|     2 | ICICI | Munna      |  158000 |
+|     3 | PNB   | Rakhi      |   53000 |
+|     4 | SBI   | Gill       |   85000 |
+|     5 | HDFC  | Mathur     |  170000 |
+|     6 | ICICI | Vinod      |   15000 |
++-------+-------+------------+---------+
+6 rows in set (0.00 sec)
+
+	6.Display the details of all records whose instalments is less than 200
+	Answer:
+mysql> select * from bank where Instalments<200;
++-------+-------+------------+---------+-------------+------+------------+
+| Accno | Bname | Cname      | Lamount | Instalments | Rate | Date       |
++-------+-------+------------+---------+-------------+------+------------+
+|     1 | SBI   | Vikash Rai |   75000 |         142 |   12 | 2011-07-19 |
+|     3 | PNB   | Rakhi      |   53000 |         140 | NULL | 2012-03-22 |
+|     4 | SBI   | Gill       |   85000 |         165 | 12.5 | 2011-06-12 |
+|     6 | ICICI | Vinod      |   15000 |         110 |   13 | 2014-11-12 |
++-------+-------+------------+---------+-------------+------+------------+
+4 rows in set (0.00 sec)
+
+	7.Display the accno, name of all the records which started before 2011-12-13
+	Answer:
+mysql> select Accno,Cname from bank where Date<'2011-12-13';
++-------+------------+
+| Accno | Cname      |
++-------+------------+
+|     1 | Vikash Rai |
+|     2 | Munna      |
+|     4 | Gill       |
++-------+------------+
+3 rows in set (0.00 sec)
+
+	8.Display the accno, name of all bank records whose rate of interest is more than or equal to 10
+	Answer:
+mysql> select Accno,Cname from bank where Rate>=10;
++-------+------------+
+| Accno | Cname      |
++-------+------------+
+|     1 | Vikash Rai |
+|     2 | Munna      |
+|     4 | Gill       |
+|     5 | Mathur     |
+|     6 | Vinod      |
++-------+------------+
+5 rows in set (0.00 sec)
+
+	9.Display the details of all loans whose rate of interest is null
+	Answer:
+mysql> select * from bank where Rate IS NULL;
++-------+-------+-------+---------+-------------+------+------------+
+| Accno | Bname | Cname | Lamount | Instalments | Rate | Date       |
++-------+-------+-------+---------+-------------+------+------------+
+|     3 | PNB   | Rakhi |   53000 |         140 | NULL | 2012-03-22 |
++-------+-------+-------+---------+-------------+------+------------+
+1 row in set (0.00 sec)
+
+	10.Display the details of all loans whose rate of interest is not null
+	Answer:
+mysql> select * from bank where Rate IS NOT NULL;
++-------+-------+------------+---------+-------------+------+------------+
+| Accno | Bname | Cname      | Lamount | Instalments | Rate | Date       |
++-------+-------+------------+---------+-------------+------+------------+
+|     1 | SBI   | Vikash Rai |   75000 |         142 |   12 | 2011-07-19 |
+|     2 | ICICI | Munna      |  158000 |         234 |   10 | 2010-05-12 |
+|     4 | SBI   | Gill       |   85000 |         165 | 12.5 | 2011-06-12 |
+|     5 | HDFC  | Mathur     |  170000 |         210 |   14 | 2013-05-18 |
+|     6 | ICICI | Vinod      |   15000 |         110 |   13 | 2014-11-12 |
++-------+-------+------------+---------+-------------+------+------------+
+5 rows in set (0.00 sec)
+
+	11.Display the details of all amounts which started after 2010-12-31 and for which the number of instalments is more than 150
+	Answer:
+mysql>  select * from bank where Date>'2010-12-31' and Instalments>150;
++-------+-------+--------+---------+-------------+------+------------+
+| Accno | Bname | Cname  | Lamount | Instalments | Rate | Date       |
++-------+-------+--------+---------+-------------+------+------------+
+|     4 | SBI   | Gill   |   85000 |         165 | 12.5 | 2011-06-12 |
+|     5 | HDFC  | Mathur |  170000 |         210 |   14 | 2013-05-18 |
++-------+-------+--------+---------+-------------+------+------------+
+2 rows in set (0.00 sec)
+
+	12.Display the Cname and Lamount for all those records for which either instalments are <150 or bank name is SBI
+	Answer:
+mysql>  select Cname,Lamount from bank where Instalments<150 or bname='SBI';
++------------+---------+
+| Cname      | Lamount |
++------------+---------+
+| Vikash Rai |   75000 |
+| Rakhi      |   53000 |
+| Gill       |   85000 |
+| Vinod      |   15000 |
++------------+---------+
+4 rows in set (0.00 sec) 
+
+	13.Display the Cname and Lamount for all those loans for which the loan amount is either <12 lakhs or rate is >11.5
+	Answer:
+mysql> select Cname,Lamount from bank where Lamount<1200000 or Rate>11.5;
++------------+---------+
+| Cname      | Lamount |
++------------+---------+
+| Vikash Rai |   75000 |
+| Munna      |  158000 |
+| Rakhi      |   53000 |
+| Gill       |   85000 |
+| Mathur     |  170000 |
+| Vinod      |   15000 |
++------------+---------+
+6 rows in set (1.12 sec)
+
+	14.Display the details of all the loans which are financed in the year 2009
+	Answer:
+mysql> select * from bank where year(Date)=2009;
+Empty set (0.01 sec)
+
+	15.Display the details of all the loans whose Lamount is in the range 80,000 to 1,50,000
+	Answer:
+mysql> select * from bank where Lamount between 80000 and 150000;
++-------+-------+-------+---------+-------------+------+------------+
+| Accno | Bname | Cname | Lamount | Instalments | Rate | Date       |
++-------+-------+-------+---------+-------------+------+------------+
+|     4 | SBI   | Gill  |   85000 |         165 | 12.5 | 2011-06-12 |
++-------+-------+-------+---------+-------------+------+------------+
+1 row in set (0.03 sec)
+
+	16.Display the details of all the loans whose rate of interest is in the range 11.00 to 12.00
+	Answer:
+mysql>  select * from bank where Rate between 11.00 and 12.00;
++-------+-------+------------+---------+-------------+------+------------+
+| Accno | Bname | Cname      | Lamount | Instalments | Rate | Date       |
++-------+-------+------------+---------+-------------+------+------------+
+|     1 | SBI   | Vikash Rai |   75000 |         142 |   12 | 2011-07-19 |
++-------+-------+------------+---------+-------------+------+------------+
+1 row in set (0.00 sec)
+
+	17.Display the customer and loan amount for all the loans for which the number of instalments are 140, 165 and 190
+	Answer:
+mysql> select Cname,Lamount from bank where Instalments in (140,165,190);
++-------+---------+
+| Cname | Lamount |
++-------+---------+
+| Rakhi |   53000 |
+| Gill  |   85000 |
++-------+---------+
+2 rows in set (0.00 sec)
+
+	18.Display the account number, Cname amd Lamount for all the loans for which the customer name ends with 'Singh'
+	Answer:
+mysql>  select Accno,Cname,Lamount from bank where Cname like '%Singh';
+Empty set (0.03 sec)
+
+	19.Display the details of all the loans whose customer name starts with A
+	Answer:
+mysql>  select * from bank where Cname like 'A%';
+Empty set (0.00 sec)
+
+	20.Display the account name and customer name for all the loans for which the customer name contains the letter 't'
+	Answer:
+mysql>  select Accno,Cname from bank where Cname like '%t%';
++-------+--------+
+| Accno | Cname  |
++-------+--------+
+|     5 | Mathur |
++-------+--------+
+1 row in set (0.00 sec)
+
+	21.Display the account name and customer name for all the loans for which the customer name doesn't contain the letter 'n'
+	Answer:
+mysql>  select Accno,Cname from bank where Cname not like '%n%';
++-------+------------+
+| Accno | Cname      |
++-------+------------+
+|     1 | Vikash Rai |
+|     3 | Rakhi      |
+|     4 | Gill       |
+|     5 | Mathur     |
++-------+------------+
+4 rows in set (0.00 sec)
+
+	22.Display the details of all the loans in ascending order of their Lamount	
+	Answer:
+mysql>  select * from bank order by Lamount ASC;
++-------+-------+------------+---------+-------------+------+------------+
+| Accno | Bname | Cname      | Lamount | Instalments | Rate | Date       |
++-------+-------+------------+---------+-------------+------+------------+
+|     6 | ICICI | Vinod      |   15000 |         110 |   13 | 2014-11-12 |
+|     3 | PNB   | Rakhi      |   53000 |         140 | NULL | 2012-03-22 |
+|     1 | SBI   | Vikash Rai |   75000 |         142 |   12 | 2011-07-19 |
+|     4 | SBI   | Gill       |   85000 |         165 | 12.5 | 2011-06-12 |
+|     2 | ICICI | Munna      |  158000 |         234 |   10 | 2010-05-12 |
+|     5 | HDFC  | Mathur     |  170000 |         210 |   14 | 2013-05-18 |
++-------+-------+------------+---------+-------------+------+------------+
+6 rows in set (0.05 sec)
+
+	23.Display the details of all the loans in descending order of their date
+	Answer:
+mysql> select * from bank order by Date DESC;
++-------+-------+------------+---------+-------------+------+------------+
+| Accno | Bname | Cname      | Lamount | Instalments | Rate | Date       |
++-------+-------+------------+---------+-------------+------+------------+
+|     6 | ICICI | Vinod      |   15000 |         110 |   13 | 2014-11-12 |
+|     5 | HDFC  | Mathur     |  170000 |         210 |   14 | 2013-05-18 |
+|     3 | PNB   | Rakhi      |   53000 |         140 | NULL | 2012-03-22 |
+|     1 | SBI   | Vikash Rai |   75000 |         142 |   12 | 2011-07-19 |
+|     4 | SBI   | Gill       |   85000 |         165 | 12.5 | 2011-06-12 |
+|     2 | ICICI | Munna      |  158000 |         234 |   10 | 2010-05-12 |
++-------+-------+------------+---------+-------------+------+------------+
+6 rows in set (0.52 sec)
+
+	24.Increase the interest rate of all loans by 0.2 for which the loan amount is more than 100000
+	Answer:
+mysql> update bank set Rate=Rate+0.2 where Lamount>100000;
+Query OK, 2 rows affected (0.52 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+	25.Put the interest rate 11.50 for all loans for which the interest rate is NULL
+	Answer:
+mysql> update bank set Rate=11.50 where Rate is NULL;
+Query OK, 1 row affected (0.07 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+	26.Delete the records of all the loans that started before 2012
+	Answer:
+mysql> delete from bank where year(Date)<2012;
+Query OK, 3 rows affected (0.07 sec)
+
+	27.Delete the records whose id is 1
+	Answer:
+mysql> delete from bank where Accno=1;
+Query OK, 1 rows affected (0.04 sec)
+
+	28.Add another column Category of type char(!) in the table bank
+	Answer:
+mysql> alter table bank add Category char(1);
+Query OK, 0 rows affected (0.98 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+	29.Display the highest loan amount
+	Answer:
+mysql> select max(Lamount) from bank;
++--------------+
+| max(Lamount) |
++--------------+
+|       170000 |
++--------------+
+1 row in set (0.10 sec)
+
+	30.To find the customer name and minimum loan amount which started in the year 2011
+	Answer:
+mysql> select Cname, min(Lamount) from bank where year(Date)=2011 and Lamount = (select min(Lamount) from bank where year(Date)=2011);
++------------+--------------+
+| Cname      | min(Lamount) |
++------------+--------------+
+| Vikash Rai |        75000 |
++------------+--------------+
+1 row in set (0.00 sec)
+
+	31.Find the total loan amount financed in the year 2010
+	Answer:
+mysql> select sum(Lamount) from bank where year(Date)=2010;
++--------------+
+| sum(Lamount) |
++--------------+
+|       158000 |
++--------------+
+1 row in set (0.00 sec)
+
+	32.Count the total number of customers whose interest rate is NULL
+	Answer:
+mysql> select count(*) from bank where Rate is NULL;
++----------+
+| count(*) |
++----------+
+|        0 |
++----------+
+1 row in set (0.00 sec)
+
+	33.To find the bank name who has the highest interest rate 
+	Answer:
+mysql>  select Bname from bank where Rate = (select max(Rate) from bank);
++-------+
+| Bname |
++-------+
+| HDFC  |
++-------+
+1 row in set (0.17 sec)
+	
+	34.Display the total finance amount bank-wise
+	Answer:	
+mysql>  select Bname, sum(Lamount) from bank group by Bname;
++-------+--------------+
+| Bname | sum(Lamount) |
++-------+--------------+
+| SBI   |       160000 |
+| ICICI |       173000 |
+| PNB   |        53000 |
+| HDFC  |       170000 |
++-------+--------------+
+4 rows in set (0.00 sec)
+
+	35.Find the minimum loan amount of each bank that has maximum loan amount more than 1000000
+	Answer:
+mysql> select Bname, min(Lamount) from bank group by Bname having max(Lamount)>1000000;
+Empty set (0.15 sec)
+
+	
